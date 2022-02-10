@@ -1,14 +1,11 @@
-file = open("words.txt", "r")
+file = open("copy-words.txt", "r")
 
 words = set()
 
 for word in file:
-    if word != "\n":
-        words.add(word[0:5])
+    words.add(word)
 
 list_words = list(words)
-list_words.sort()
-list_words.remove(' \n')
 
 
 def not_contains(initial_list, letter):
@@ -35,32 +32,18 @@ def contains_correct_position(initial_list, letter, position):
     return li
 
 
-# list_words = not_contains(list_words, 'r')
-# list_words = not_contains(list_words, 'a')
-# list_words = not_contains(list_words, 'n')
-# list_words = contains_different_position(list_words, 'c', 0)
-# list_words = contains_different_position(list_words, 'e', 4)
-# list_words = not_contains(list_words, 'l')
-# list_words = not_contains(list_words, 't')
-# list_words = not_contains(list_words, 'h')
-# list_words = contains_correct_position(list_words, 'd', 0)
-# list_words = contains_correct_position(list_words, 'i', 1)
-# list_words = contains_correct_position(list_words, 'c', 2)
-# list_words = contains_correct_position(list_words, 'e', 3)
+def match_pattern(initial_list, patterns):
+    li = initial_list
+    for (letter, position, case) in patterns:
+        if case == 'b':
+            li = not_contains(li, letter)
+        elif case == 'y':
+            li = contains_different_position(li, letter, position)
+        else:
+            li = contains_correct_position(li, letter, position)
+    return li
 
-list_words = not_contains(list_words, 'c')
-list_words = not_contains(list_words, 'n')
-list_words = not_contains(list_words, 'b')
-list_words = not_contains(list_words, 'l')
-list_words = not_contains(list_words, 'i')
-list_words = not_contains(list_words, 'm')
-list_words = not_contains(list_words, 's')
-list_words = not_contains(list_words, 'k')
-list_words = contains_different_position(list_words, 'r', 1)
-list_words = contains_different_position(list_words, 'a', 2)
-list_words = contains_different_position(list_words, 'e', 4)
-list_words = contains_correct_position(list_words, 'a', 0)
-list_words = contains_correct_position(list_words, 'e', 3)
-list_words = contains_correct_position(list_words, 'r', 4)
 
+list_words = match_pattern(list_words, [('c', 0, 'b'), ('r', 1, 'y'), ('a', 2, 'b'), ('n', 3, 'b'), ('e', 4, 'y')])
+print(len(list_words))
 print(list_words)
